@@ -17,6 +17,11 @@ interface Dao {
     fun getAllShopListNames(): Flow<List<ShoppingListName>>
     @Query ("DELETE FROM note_list WHERE id IS :id")
     suspend fun deleteNote(id: Int)
+
+    //28.1 ниже в одной функции создаём возможность удаления item
+    @Query ("DELETE FROM shopping_list_names WHERE id IS :id")
+    suspend fun deleteShopListName(id: Int)
+
     @Insert
     suspend fun insertNote(note: NoteItem)
     @Insert
