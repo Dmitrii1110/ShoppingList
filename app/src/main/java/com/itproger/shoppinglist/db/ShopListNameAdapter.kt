@@ -46,6 +46,12 @@ class ShopListNameAdapter(private val listener: Listener) : ListAdapter<Shopping
                 listener.deleteItem(shopListNameItem.id!!) //27.8 Эту строку тоже убираем //28.9 И вновь добавили
             }
 
+            //29.3 Прописываем редактирование названия списка через слушатель нажатий и убрали индификатор
+            imEdit.setOnClickListener{
+                listener.editItem(shopListNameItem)
+            }
+
+
         }
         companion object{
             fun create(parent: ViewGroup): ItemHolder{
@@ -69,7 +75,8 @@ class ShopListNameAdapter(private val listener: Listener) : ListAdapter<Shopping
     //прописываем интерфейс для кнопки удалить
     interface Listener{
         fun deleteItem(id: Int)
-        fun onClickItem(note: NoteItem)
+        fun editItem(shopListName : ShoppingListName) //29.4 Создаём функцию редактирования заголовка листа покупок
+        fun onClickItem(shopListName: ShoppingListName)
 
     }
 }

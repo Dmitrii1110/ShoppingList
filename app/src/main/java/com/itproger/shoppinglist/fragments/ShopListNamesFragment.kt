@@ -42,7 +42,7 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
                 )
                 mainViewModel.insertShopListName(shopListName)
             }
-        })
+        }, "") //29.10 Добавлено "" - пустое поле так как идёт создание нового листа списка покупок
 
 
     }
@@ -98,7 +98,18 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
 
     }
 
-    override fun onClickItem(note: NoteItem) {
+    //29.6 Вставлена копия куска кода onClickNew
+    override fun editItem(shopListName: ShoppingListName) {
+        NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener{
+            override fun onClick(name: String){
+
+                mainViewModel.updateListName(shopListName.copy(name = name)) //29.7 Изменили на updateListName, вставляем в скобках .copy(name = name)
+            }
+        }, shopListName.name) //29.11 Добавлено shopListName.name - мы тем самым передаём текущее название в диалоговом окне редактирования заголовка
+    }
+
+    //29.5 Изменили у существующей функции название переменной и название класса
+    override fun onClickItem(shopListName: ShoppingListName) {
 
     }
 }

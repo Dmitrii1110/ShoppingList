@@ -23,6 +23,11 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
         dao.updateNote(note)
     }
 
+    //29.2 Добавялем функцию редактирования названия списка покупок через кнопку
+    fun updateListName(shopListName: ShoppingListName) = viewModelScope.launch {
+        dao.updateListName(shopListName)
+    }
+
     //функция удаления записей через карутину
     fun deleteNote(id: Int) = viewModelScope.launch {
         dao.deleteNote(id)
