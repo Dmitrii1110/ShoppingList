@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ListNameItemBinding
-import com.itproger.shoppinglist.databinding.NoteListItemBinding
 import com.itproger.shoppinglist.entities.NoteItem
 import com.itproger.shoppinglist.entities.ShoppingListName
-import com.itproger.shoppinglist.utils.HtmlManager
 
 //27.1 Создали новый класс (скопировали с NoteAdapter) и заменили NoteAdapter на ShoppingListName
-//27.12 Пока убираем интерфейс listener : Listener
+//27.13 Пока убираем интерфейс listener : Listener
 class ShopListNameAdapter() : ListAdapter<ShoppingListName, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {

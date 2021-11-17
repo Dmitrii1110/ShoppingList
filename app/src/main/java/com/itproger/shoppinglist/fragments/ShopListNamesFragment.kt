@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.itproger.shoppinglist.activities.MainApp
 import com.itproger.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.itproger.shoppinglist.db.MainViewModel
+import com.itproger.shoppinglist.db.ShopListNameAdapter
 import com.itproger.shoppinglist.dialogs.NewListDialog
 import com.itproger.shoppinglist.entities.ShoppingListName
 import com.itproger.shoppinglist.utils.TimeManager
@@ -17,6 +19,7 @@ import com.itproger.shoppinglist.utils.TimeManager
 
 class ShopListNamesFragment : BaseFragment() {
     private lateinit var binding: FragmentShopListNamesBinding
+    private lateinit var adapter: ShopListNameAdapter //27.14 подготавливаем переменную, чтобы инициализировать позже ShopListAdapter
 
 
     private val mainViewModel: MainViewModel by activityViewModels {
@@ -63,12 +66,16 @@ class ShopListNamesFragment : BaseFragment() {
     }
 
     private  fun initRCView() = with(binding){
-
+        rcView.layoutManager = LinearLayoutManager(activity)//27.15 Передали контекст
+        adapter = ShopListNameAdapter()//27.16 Инициализируем наш адаптер
+        rcView.adapter = adapter//27.17 Поключаем наш адаптер к rcView
     }
 
     //observer следит за базой данных и передет актуальные данные на сервер
     private fun observer (){
         mainViewModel.allShoppingListNames.observe(viewLifecycleOwner, {
+            //27.18 Берём наш адаптер, который будет обновлять наш submitList
+            adapter.submitList(it)
 
         })
     }
