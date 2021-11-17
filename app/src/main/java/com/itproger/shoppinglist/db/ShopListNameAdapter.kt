@@ -14,14 +14,15 @@ import com.itproger.shoppinglist.entities.ShoppingListName
 
 //27.1 Создали новый класс (скопировали с NoteAdapter) и заменили NoteAdapter на ShoppingListName
 //27.13 Пока убираем интерфейс listener : Listener
-class ShopListNameAdapter() : ListAdapter<ShoppingListName, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
+//28.7 Снова добавляем интерфейс listener : Listener
+class ShopListNameAdapter(private val listener: Listener) : ListAdapter<ShoppingListName, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.setData(getItem(position)) //27.12 Пока убираем интерфейс listener
+        holder.setData(getItem(position), listener) //27.12 Пока убираем интерфейс listener //28.10 Вновь добавляем
     }
 
     //подключаем созданную форму note list item к Binding
@@ -32,15 +33,17 @@ class ShopListNameAdapter() : ListAdapter<ShoppingListName, ShopListNameAdapter.
         //27.2 Заменили NoteItem на ShoppingListName
         //27.3 Изменяем название переменной note на shopListNameItem
         //27.11 Пока убираем интерфейс listener: Listener
-        fun setData(shopListNameItem: ShoppingListName) = with(binding){
+        //28.8 Снова добавяляем listener : Listener
+        fun setData(shopListNameItem: ShoppingListName, listener : Listener) = with(binding){
             tvListName.text = shopListNameItem.name //27.5 Заменили tvTitle на tvListName, а title заменили на name
             //tvDescription.text = HtmlManager.getFromHtml(shopListNameItem.content).trim() //27.6 Эту сроку мы убираем
             tvTime.text = shopListNameItem.time
             itemView.setOnClickListener{
                 //listener.onClickItem(shopListNameItem) 27.7 Эту строку тоже убираем
             }
+            //*При нажатии на эту кнопку сработает интерфейс
             imDelete.setOnClickListener{
-                //listener.deleteItem(shopListNameItem.id!!) 27.8 Эту строку тоже убираем
+                listener.deleteItem(shopListNameItem.id!!) //27.8 Эту строку тоже убираем //28.9 И вновь добавили
             }
 
         }

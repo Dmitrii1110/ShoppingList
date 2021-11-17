@@ -12,12 +12,14 @@ import com.itproger.shoppinglist.activities.MainApp
 import com.itproger.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.itproger.shoppinglist.db.MainViewModel
 import com.itproger.shoppinglist.db.ShopListNameAdapter
+import com.itproger.shoppinglist.dialogs.DeleteDialog
 import com.itproger.shoppinglist.dialogs.NewListDialog
+import com.itproger.shoppinglist.entities.NoteItem
 import com.itproger.shoppinglist.entities.ShoppingListName
 import com.itproger.shoppinglist.utils.TimeManager
 
-
-class ShopListNamesFragment : BaseFragment() {
+//28.11 Добавляем в класс ShopListNameAdapter.Listener //28.12 Добавялем методы
+class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
     private lateinit var binding: FragmentShopListNamesBinding
     private lateinit var adapter: ShopListNameAdapter //27.14 подготавливаем переменную, чтобы инициализировать позже ShopListAdapter
 
@@ -67,7 +69,7 @@ class ShopListNamesFragment : BaseFragment() {
 
     private  fun initRCView() = with(binding){
         rcView.layoutManager = LinearLayoutManager(activity)//27.15 Передали контекст
-        adapter = ShopListNameAdapter()//27.16 Инициализируем наш адаптер
+        adapter = ShopListNameAdapter(this@ShopListNamesFragment)//27.16 Инициализируем наш адаптер //28.14 Передаём контекст this@ShopListNamesFragment
         rcView.adapter = adapter//27.17 Поключаем наш адаптер к rcView
     }
 
@@ -83,5 +85,20 @@ class ShopListNamesFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun newInstance() = ShopListNamesFragment()
+    }
+
+    //*28.13 Прописываем нажатие на кнопку Удалить Список
+    override fun deleteItem(id: Int) {
+        DeleteDialog.showDialog(context as AppCompatActivity, object : DeleteDialog.Listener{
+            override fun onClick() {
+                mainViewModel.deleteShopListName(id)
+            }
+
+        })
+
+    }
+
+    override fun onClickItem(note: NoteItem) {
+
     }
 }
