@@ -1,7 +1,7 @@
 package com.itproger.shoppinglist.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.itproger.shoppinglist.activities.MainApp
+import com.itproger.shoppinglist.activities.ShopListActivity
 import com.itproger.shoppinglist.databinding.FragmentShopListNamesBinding
 import com.itproger.shoppinglist.db.MainViewModel
 import com.itproger.shoppinglist.db.ShopListNameAdapter
 import com.itproger.shoppinglist.dialogs.DeleteDialog
 import com.itproger.shoppinglist.dialogs.NewListDialog
-import com.itproger.shoppinglist.entities.NoteItem
-import com.itproger.shoppinglist.entities.ShoppingListName
+import com.itproger.shoppinglist.entities.ShopListNameItem
 import com.itproger.shoppinglist.utils.TimeManager
 
 //28.11 Добавляем в класс ShopListNameAdapter.Listener //28.12 Добавялем методы
@@ -32,7 +32,7 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
     override fun onClickNew() {
         NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener{
             override fun onClick(name: String){
-                val shopListName = ShoppingListName(
+                val shopListName = ShopListNameItem(
                     null,
                     name,
                     TimeManager.getCurrentTime(),
@@ -75,7 +75,7 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
 
     //observer следит за базой данных и передет актуальные данные на сервер
     private fun observer (){
-        mainViewModel.allShoppingListNames.observe(viewLifecycleOwner, {
+        mainViewModel.allShopListNamesItem.observe(viewLifecycleOwner, {
             //27.18 Берём наш адаптер, который будет обновлять наш submitList
             adapter.submitList(it)
 
@@ -99,17 +99,22 @@ class ShopListNamesFragment : BaseFragment(), ShopListNameAdapter.Listener {
     }
 
     //29.6 Вставлена копия куска кода onClickNew
-    override fun editItem(shopListName: ShoppingListName) {
+    override fun editItem(shopListNameItem: ShopListNameItem) {
         NewListDialog.showDialog(activity as AppCompatActivity, object : NewListDialog.Listener{
             override fun onClick(name: String){
 
-                mainViewModel.updateListName(shopListName.copy(name = name)) //29.7 Изменили на updateListName, вставляем в скобках .copy(name = name)
+                mainViewModel.updateListName(shopListNameItem.copy(name = name)) //29.7 Изменили на updateListName, вставляем в скобках .copy(name = name)
             }
-        }, shopListName.name) //29.11 Добавлено shopListName.name - мы тем самым передаём текущее название в диалоговом окне редактирования заголовка
+        }, shopListNameItem.name) //29.11 Добавлено shopListName.name - мы тем самым передаём текущее название в диалоговом окне редактирования заголовка
     }
 
     //29.5 Изменили у существующей функции название переменной и название класса
-    override fun onClickItem(shopListName: ShoppingListName) {
+    override fun onClickItem(shopListNameItem: ShopListNameItem) {
+        //30.7 Создаём интент
+    val i = Intent(activity, ShopListActivity::class.java).apply {
+        putExtra(ShopListActivity.SHOP_LIST_NAME, shopListNameItem)
+    }
+        startActivity(i) //30.8
 
     }
 }

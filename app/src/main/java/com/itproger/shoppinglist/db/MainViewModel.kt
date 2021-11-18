@@ -2,7 +2,7 @@ package com.itproger.shoppinglist.db
 
 import androidx.lifecycle.*
 import com.itproger.shoppinglist.entities.NoteItem
-import com.itproger.shoppinglist.entities.ShoppingListName
+import com.itproger.shoppinglist.entities.ShopListNameItem
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
@@ -10,13 +10,13 @@ import java.lang.IllegalArgumentException
 class MainViewModel(database : MainDataBase) : ViewModel() {
     val dao = database.getDao()
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
-    val allShoppingListNames: LiveData<List<ShoppingListName>> = dao.getAllShopListNames().asLiveData()
+    val allShopListNamesItem: LiveData<List<ShopListNameItem>> = dao.getAllShopListNames().asLiveData()
     fun insertNote(note: NoteItem) = viewModelScope.launch {
         dao.insertNote(note)
     }
 
-    fun insertShopListName(listName: ShoppingListName) = viewModelScope.launch {
-        dao.insertShopListNote(listName)
+    fun insertShopListName(listNameItem: ShopListNameItem) = viewModelScope.launch {
+        dao.insertShopListNote(listNameItem)
     }
 
     fun updateNote(note: NoteItem) = viewModelScope.launch {
@@ -24,8 +24,8 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
     }
 
     //29.2 Добавялем функцию редактирования названия списка покупок через кнопку
-    fun updateListName(shopListName: ShoppingListName) = viewModelScope.launch {
-        dao.updateListName(shopListName)
+    fun updateListName(shopListNameItem: ShopListNameItem) = viewModelScope.launch {
+        dao.updateListName(shopListNameItem)
     }
 
     //функция удаления записей через карутину

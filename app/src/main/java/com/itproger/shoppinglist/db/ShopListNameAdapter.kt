@@ -9,13 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ListNameItemBinding
-import com.itproger.shoppinglist.entities.NoteItem
-import com.itproger.shoppinglist.entities.ShoppingListName
+import com.itproger.shoppinglist.entities.ShopListNameItem
 
 //27.1 Создали новый класс (скопировали с NoteAdapter) и заменили NoteAdapter на ShoppingListName
 //27.13 Пока убираем интерфейс listener : Listener
 //28.7 Снова добавляем интерфейс listener : Listener
-class ShopListNameAdapter(private val listener: Listener) : ListAdapter<ShoppingListName, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
+class ShopListNameAdapter(private val listener: Listener) : ListAdapter<ShopListNameItem, ShopListNameAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
@@ -34,12 +33,12 @@ class ShopListNameAdapter(private val listener: Listener) : ListAdapter<Shopping
         //27.3 Изменяем название переменной note на shopListNameItem
         //27.11 Пока убираем интерфейс listener: Listener
         //28.8 Снова добавяляем listener : Listener
-        fun setData(shopListNameItem: ShoppingListName, listener : Listener) = with(binding){
+        fun setData(shopListNameItem: ShopListNameItem, listener : Listener) = with(binding){
             tvListName.text = shopListNameItem.name //27.5 Заменили tvTitle на tvListName, а title заменили на name
             //tvDescription.text = HtmlManager.getFromHtml(shopListNameItem.content).trim() //27.6 Эту сроку мы убираем
             tvTime.text = shopListNameItem.time
             itemView.setOnClickListener{
-                //listener.onClickItem(shopListNameItem) 27.7 Эту строку тоже убираем
+                listener.onClickItem(shopListNameItem) //27.7 Эту строку тоже убираем //30.8 снова добавили
             }
             //*При нажатии на эту кнопку сработает интерфейс
             imDelete.setOnClickListener{
@@ -62,12 +61,12 @@ class ShopListNameAdapter(private val listener: Listener) : ListAdapter<Shopping
         }
     }
 
-    class ItemComparator : DiffUtil.ItemCallback<ShoppingListName>(){ //27.9 Меняем NoteItem на ShoppingListName
-        override fun areItemsTheSame(oldItem: ShoppingListName, newItem: ShoppingListName): Boolean {
+    class ItemComparator : DiffUtil.ItemCallback<ShopListNameItem>(){ //27.9 Меняем NoteItem на ShoppingListName
+        override fun areItemsTheSame(oldItem: ShopListNameItem, newItem: ShopListNameItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ShoppingListName, newItem: ShoppingListName): Boolean {//27.10 Меняем NoteItem на ShoppingListName
+        override fun areContentsTheSame(oldItem: ShopListNameItem, newItem: ShopListNameItem): Boolean {//27.10 Меняем NoteItem на ShoppingListName
             return oldItem == newItem
         }
 
@@ -75,8 +74,8 @@ class ShopListNameAdapter(private val listener: Listener) : ListAdapter<Shopping
     //прописываем интерфейс для кнопки удалить
     interface Listener{
         fun deleteItem(id: Int)
-        fun editItem(shopListName : ShoppingListName) //29.4 Создаём функцию редактирования заголовка листа покупок
-        fun onClickItem(shopListName: ShoppingListName)
+        fun editItem(shopListNameItem : ShopListNameItem) //29.4 Создаём функцию редактирования заголовка листа покупок
+        fun onClickItem(shopListNameItem: ShopListNameItem)
 
     }
 }

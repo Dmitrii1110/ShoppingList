@@ -3,17 +3,15 @@ package com.itproger.shoppinglist.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
-import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ActivityShopListBinding
 import com.itproger.shoppinglist.db.MainViewModel
-import com.itproger.shoppinglist.entities.ShoppingListName
+import com.itproger.shoppinglist.entities.ShopListNameItem
 
 class ShopListActivity : AppCompatActivity() {
     //30.1 Создали активити шоп лист бандинг
     private lateinit var binding: ActivityShopListBinding
     //30.4 Добавиди возможность поиска нужного списка
-    private var shopListName: ShoppingListName? = null
+    private var shopListNameItem: ShopListNameItem? = null
 
     //30.3 Добавляем кусок кода из шоп лист нейм фрагмент
     private val mainViewModel: MainViewModel by viewModels {
@@ -24,11 +22,13 @@ class ShopListActivity : AppCompatActivity() {
         //30.2 Инициализируем активити
         binding = ActivityShopListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        init() //36.7
     }
 
     //30.5 Функция запуска передачи данных
     private fun init(){
-        shopListName = intent.getSerializableExtra(SHOP_LIST_NAME) as ShoppingListName
+        shopListNameItem = intent.getSerializableExtra(SHOP_LIST_NAME) as ShopListNameItem
+        binding.tvtest.text = shopListNameItem?.name
     }
 
     //30.6 Создали константу
