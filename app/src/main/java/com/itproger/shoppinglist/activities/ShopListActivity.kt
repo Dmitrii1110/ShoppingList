@@ -3,6 +3,7 @@ package com.itproger.shoppinglist.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ActivityShopListBinding
@@ -14,6 +15,8 @@ class ShopListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShopListBinding
     //30.4 Добавиди возможность поиска нужного списка
     private var shopListNameItem: ShopListNameItem? = null
+    //32.1 Прячем кнопку сохранить в NewItem до момента пока не появится информация
+    private lateinit var saveItem: MenuItem
 
     //30.3 Добавляем кусок кода из шоп лист нейм фрагмент
     private val mainViewModel: MainViewModel by viewModels {
@@ -30,7 +33,29 @@ class ShopListActivity : AppCompatActivity() {
     //31.1 Добавляем меню из созданной разметки
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.shop_list_menu, menu)
+        //32.2 Пряем кнопку сохранить в NewItem
+        saveItem = menu?.findItem(R.id.save_item)!!
+        val newItem = menu.findItem(R.id.new_item) //32.4 Слушатель показа кнопки
+        newItem.setOnActionExpandListener(expandActionView())
+        saveItem.isVisible = false
         return true
+    }
+
+    //32.3 Вновь показываем кнопку сохранить
+    private fun expandActionView():MenuItem.OnActionExpandListener{
+        return object : MenuItem.OnActionExpandListener{
+            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                saveItem.isVisible = true
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                saveItem.isVisible = false
+                invalidateOptionsMenu()  //32.5 Перерисовка элементов меню после сохранения newItem
+                return true
+            }
+
+        }
     }
 
     //30.5 Функция запуска передачи данных
