@@ -2,7 +2,9 @@ package com.itproger.shoppinglist.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.viewModels
+import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ActivityShopListBinding
 import com.itproger.shoppinglist.db.MainViewModel
 import com.itproger.shoppinglist.entities.ShopListNameItem
@@ -23,6 +25,12 @@ class ShopListActivity : AppCompatActivity() {
         binding = ActivityShopListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init() //36.7
+    }
+
+    //31.1 Добавляем меню из созданной разметки
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.shop_list_menu, menu)
+        return true
     }
 
     //30.5 Функция запуска передачи данных
