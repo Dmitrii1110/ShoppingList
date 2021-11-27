@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ListNameItemBinding
 import com.itproger.shoppinglist.entities.ShopListNameItem
-import com.itproger.shoppinglist.entities.ShoppingListItem
+import com.itproger.shoppinglist.entities.ShopListItem
 
 //27.1 Создали новый класс (скопировали с NoteAdapter) и заменили NoteAdapter на ShoppingListName
 //27.13 Пока убираем интерфейс listener : Listener
 //28.7 Снова добавляем интерфейс listener : Listener
-class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShoppingListItem, ShopListItemAdapter.ItemHolder>(ItemComparator()) {
+class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopListItem, ShopListItemAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return if (viewType == 0) ItemHolder.createShopItem(parent)//передает норальная разметка
@@ -44,12 +44,12 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<Shopping
         //27.3 Изменяем название переменной note на shopListNameItem
         //27.11 Пока убираем интерфейс listener: Listener
         //28.8 Снова добавяляем listener : Listener
-        fun setItemData(shopListItem: ShoppingListItem, listener : Listener) = with(binding){
+        fun setItemData(shopListItem: ShopListItem, listener : Listener) = with(binding){
 
         }
 
         //33.4
-        fun setLibraryData(shopListNameItem: ShoppingListItem, listener : Listener) = with(binding){
+        fun setLibraryData(shopListNameItem: ShopListItem, listener : Listener) = with(binding){
 
         }
         companion object{
@@ -67,12 +67,12 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<Shopping
         }
     }
 
-    class ItemComparator : DiffUtil.ItemCallback<ShoppingListItem>(){ //27.9 Меняем NoteItem на ShoppingListName
-        override fun areItemsTheSame(oldItem: ShoppingListItem, newItem: ShoppingListItem): Boolean {
+    class ItemComparator : DiffUtil.ItemCallback<ShopListItem>(){ //27.9 Меняем NoteItem на ShoppingListName
+        override fun areItemsTheSame(oldItem: ShopListItem, newItem: ShopListItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ShoppingListItem, newItem: ShoppingListItem): Boolean {//27.10 Меняем NoteItem на ShoppingListName
+        override fun areContentsTheSame(oldItem: ShopListItem, newItem: ShopListItem): Boolean {//27.10 Меняем NoteItem на ShoppingListName
             return oldItem == newItem
         }
 

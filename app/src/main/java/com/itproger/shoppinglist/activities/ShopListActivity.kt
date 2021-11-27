@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import androidx.activity.viewModels
 import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ActivityShopListBinding
 import com.itproger.shoppinglist.db.MainViewModel
+import com.itproger.shoppinglist.entities.ShopListItem
 import com.itproger.shoppinglist.entities.ShopListNameItem
 
 class ShopListActivity : AppCompatActivity() {
@@ -17,6 +19,8 @@ class ShopListActivity : AppCompatActivity() {
     private var shopListNameItem: ShopListNameItem? = null
     //32.1 Прячем кнопку сохранить в NewItem до момента пока не появится информация
     private lateinit var saveItem: MenuItem
+    //35.3
+    private var edItem: EditText? = null
 
     //30.3 Добавляем кусок кода из шоп лист нейм фрагмент
     private val mainViewModel: MainViewModel by viewModels {
@@ -36,9 +40,34 @@ class ShopListActivity : AppCompatActivity() {
         //32.2 Пряем кнопку сохранить в NewItem
         saveItem = menu?.findItem(R.id.save_item)!!
         val newItem = menu.findItem(R.id.new_item) //32.4 Слушатель показа кнопки
+        edItem = newItem.actionView.findViewById(R.id.edNewShopItem) as EditText //35.4 Сохраняем введенный текст
         newItem.setOnActionExpandListener(expandActionView())
         saveItem.isVisible = false
         return true
+    }
+
+    //35.6
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.save_item){
+            addNewShopItem() //после проверки инициализиуем функцию ниже
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //35.5 Сохраняем данные и передаем их в MainViewModel
+    private fun addNewShopItem(){
+        if (edItem?.text.toString().isEmpty()) return // если пусто то делаем возврат
+        //если не пусто то созраняем
+        val item = ShopListItem(
+            null,
+            edItem?.text.toString(),
+            null,
+            0,
+            shopListNameItem?.id!!,
+            0
+
+        )
+        mainViewModel.insertShopItem(item)
     }
 
     //32.3 Вновь показываем кнопку сохранить

@@ -11,5 +11,5 @@
         android:ems="10"
         android:hint="New item"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="@null" />
 </LinearLayout>
