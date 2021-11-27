@@ -57,18 +57,18 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<Shopping
             fun createShopItem(parent: ViewGroup): ItemHolder{
                 return ItemHolder(
                     LayoutInflater.from(parent.context).
-                    inflate(R.layout.list_name_item, parent, false)) //27.13 Заменяем note_list_item на list_name_item
+                    inflate(R.layout.shop_list_item, parent, false)) //27.13 Заменяем note_list_item на list_name_item
             }
             fun createLibraryItem(parent: ViewGroup): ItemHolder{
                 return ItemHolder(
                     LayoutInflater.from(parent.context).
-                    inflate(R.layout.list_name_item, parent, false))
+                    inflate(R.layout.shop_library_list_item, parent, false))
             }
         }
     }
 
     class ItemComparator : DiffUtil.ItemCallback<ShoppingListItem>(){ //27.9 Меняем NoteItem на ShoppingListName
-        override fun areItemsTheSame(oldItem: ShopListNameItem, newItem: ShoppingListItem): Boolean {
+        override fun areItemsTheSame(oldItem: ShoppingListItem, newItem: ShoppingListItem): Boolean {
             return oldItem.id == newItem.id
         }
 

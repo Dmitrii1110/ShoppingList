@@ -15,6 +15,8 @@
         <entry key="app/src/main/res/layout/list_name_item.xml" value="0.45" />
         <entry key="app/src/main/res/layout/new_list_dialog.xml" value="0.24320652173913043" />
         <entry key="app/src/main/res/layout/note_list_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/shop_library_list_item.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/shop_list_item.xml" value="0.45" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.2037037037037037" />
         <entry key="app/src/main/res/menu/nw_note_menu.xml" value="0.25384615384615383" />
         <entry key="app/src/main/res/menu/shop_list_menu.xml" value="0.2578125" />
