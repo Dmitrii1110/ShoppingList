@@ -6,13 +6,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ActivityShopListBinding
 import com.itproger.shoppinglist.db.MainViewModel
+import com.itproger.shoppinglist.db.ShopListItemAdapter
 import com.itproger.shoppinglist.entities.ShopListItem
 import com.itproger.shoppinglist.entities.ShopListNameItem
 
-class ShopListActivity : AppCompatActivity() {
+class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     //30.1 Создали активити шоп лист бандинг
     private lateinit var binding: ActivityShopListBinding
     //30.4 Добавиди возможность поиска нужного списка
@@ -21,6 +23,9 @@ class ShopListActivity : AppCompatActivity() {
     private lateinit var saveItem: MenuItem
     //35.3
     private var edItem: EditText? = null
+    //36.9
+    private var adapter: ShopListItemAdapter? = null
+
 
     //30.3 Добавляем кусок кода из шоп лист нейм фрагмент
     private val mainViewModel: MainViewModel by viewModels {
@@ -31,7 +36,9 @@ class ShopListActivity : AppCompatActivity() {
         //30.2 Инициализируем активити
         binding = ActivityShopListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init() //36.7
+        init() //30.7
+        listItemObserver() //36.7
+        initRcView() //36.11
     }
 
     //31.1 Добавляем меню из созданной разметки
@@ -67,7 +74,22 @@ class ShopListActivity : AppCompatActivity() {
             0
 
         )
-        mainViewModel.insertShopItem(item)
+        edItem?.setText("")//чтобы после сохрания элемента окно ввода снова было пустым
+        mainViewModel.insertShopItem(item) //Сохраняем данные
+    }
+
+    //36.6 Показываем полученные элементы списка на нашем активити
+    private fun listItemObserver(){
+        mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this,{
+            adapter?.submitList(it)
+        })
+    }
+
+    //36.8 Для иницаилизации RecycleView
+    private fun initRcView()= with(binding){
+        adapter = ShopListItemAdapter(this@ShopListActivity)
+       rcView.layoutManager = LinearLayoutManager(this@ShopListActivity)
+        rcView.adapter = adapter
     }
 
     //32.3 Вновь показываем кнопку сохранить
@@ -96,5 +118,17 @@ class ShopListActivity : AppCompatActivity() {
     //30.6 Создали константу
     companion object{
         const val SHOP_LIST_NAME = "shop_list_name"
+    }
+
+    override fun deleteItem(id: Int) {
+
+    }
+
+    override fun editItem(shopListNameItem: ShopListNameItem) {
+
+    }
+
+    override fun onClickItem(shopListNameItem: ShopListNameItem) {
+
     }
 }

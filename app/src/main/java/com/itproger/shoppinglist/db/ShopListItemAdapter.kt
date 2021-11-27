@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.itproger.shoppinglist.R
 import com.itproger.shoppinglist.databinding.ListNameItemBinding
+import com.itproger.shoppinglist.databinding.ShopListItemBinding
 import com.itproger.shoppinglist.entities.ShopListNameItem
 import com.itproger.shoppinglist.entities.ShopListItem
 
@@ -36,20 +37,24 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
         return super.getItem(position).itemType
     }
     //подключаем созданную форму note list item к Binding
-    class ItemHolder(view: View) : RecyclerView.ViewHolder(view){
-        private val binding = ListNameItemBinding.bind(view) //27.4 Заменили NoteListItemBinding на ListNameItemBinding
+    class ItemHolder(val view: View) : RecyclerView.ViewHolder(view){
+         //27.4 Заменили NoteListItemBinding на ListNameItemBinding //36.12 Удалили строку
 
         //функция для заполнения формы разметки note list item
         //27.2 Заменили NoteItem на ShoppingListName
         //27.3 Изменяем название переменной note на shopListNameItem
         //27.11 Пока убираем интерфейс listener: Listener
         //28.8 Снова добавяляем listener : Listener
-        fun setItemData(shopListItem: ShopListItem, listener : Listener) = with(binding){
+        fun setItemData(shopListItem: ShopListItem, listener : Listener){
+            val binding = ShopListItemBinding.bind(view)
+            binding.apply {
+                tvName.text = shopListItem.name
+            }
 
         }
 
         //33.4
-        fun setLibraryData(shopListNameItem: ShopListItem, listener : Listener) = with(binding){
+        fun setLibraryData(shopListNameItem: ShopListItem, listener : Listener){
 
         }
         companion object{
