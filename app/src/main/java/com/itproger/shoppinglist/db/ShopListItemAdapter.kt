@@ -1,8 +1,10 @@
 package com.itproger.shoppinglist.db
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
@@ -51,6 +53,10 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
                 tvName.text = shopListItem.name
                 tvInfo.text = shopListItem.itemInfo //37.1
                 tvInfo.visibility = infoVisibility(shopListItem)
+                //38.2 запускаем функцию проверки через слушатель нажатий
+                chBox.setOnClickListener{
+                    setPaintFlagAndColor(binding)
+                }
             }
 
         }
@@ -59,8 +65,25 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
         fun setLibraryData(shopListNameItem: ShopListItem, listener : Listener){
 
         }
+        //38.1 Меняем цвет из зачеркиваем тект при нажатии на чек бокс и обратно
+        private fun setPaintFlagAndColor(binding: ShopListItemBinding){
+            binding.apply {
+                if(chBox.isChecked){
+                    tvName.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //зачеркиваем
+                    tvInfo.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG //зачеркиваем
+                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.grey_light))
+                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.grey_light))
+                } else {
+                    tvName.paintFlags = Paint.ANTI_ALIAS_FLAG //возврат в первонач значение
+                    tvInfo.paintFlags = Paint.ANTI_ALIAS_FLAG //возврат в первонач значение
+                    tvName.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                    tvInfo.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                }
+            }
+
+        }
         //37.2 Делаем проверку пусто ли или есть значения
-        fun infoVisibility(shopListItem: ShopListItem): Int{
+        private fun infoVisibility(shopListItem: ShopListItem): Int{
             return if(shopListItem.itemInfo.isNullOrEmpty()){
                 View.GONE
             } else {
