@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,6 +83,12 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private fun listItemObserver(){
         mainViewModel.getAllItemsFromList(shopListNameItem?.id!!).observe(this,{
             adapter?.submitList(it)
+            //37.3 Делаем проверку
+            binding.tvEmpty.visibility = if (it.isEmpty()){
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         })
     }
 
@@ -112,7 +119,6 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     //30.5 Функция запуска передачи данных
     private fun init(){
         shopListNameItem = intent.getSerializableExtra(SHOP_LIST_NAME) as ShopListNameItem
-        binding.tvtest.text = shopListNameItem?.name
     }
 
     //30.6 Создали константу
