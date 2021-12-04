@@ -37,6 +37,9 @@ interface Dao {
     suspend fun insertShopListNote(nameItem: ShopListNameItem)
     @Update
     suspend fun updateNote(note: NoteItem)
+    //39.1
+    @Update
+    suspend fun updateListItem(item: ShopListItem)
     //29.1 Создаём функцию редактирования через кнопку названия списка
     @Update
     suspend fun updateListName(shopListNameItem: ShopListNameItem)

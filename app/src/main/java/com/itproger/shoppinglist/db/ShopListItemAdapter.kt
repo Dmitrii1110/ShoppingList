@@ -53,9 +53,11 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
                 tvName.text = shopListItem.name
                 tvInfo.text = shopListItem.itemInfo //37.1
                 tvInfo.visibility = infoVisibility(shopListItem)
+                chBox.isChecked = shopListItem.itemChecked //39.4
+                setPaintFlagAndColor(binding)
                 //38.2 запускаем функцию проверки через слушатель нажатий
                 chBox.setOnClickListener{
-                    setPaintFlagAndColor(binding)
+                    listener.onClickItem(shopListItem.copy(itemChecked = chBox.isChecked)) //39.3
                 }
             }
 
@@ -117,9 +119,7 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
     }
     //прописываем интерфейс для кнопки удалить
     interface Listener{
-        fun deleteItem(id: Int)
-        fun editItem(shopListNameItem : ShopListNameItem) //29.4 Создаём функцию редактирования заголовка листа покупок
-        fun onClickItem(shopListNameItem: ShopListNameItem)
+        fun onClickItem(shopListItem: ShopListItem)
 
     }
 }
