@@ -55,7 +55,11 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
                 setPaintFlagAndColor(binding)
                 //38.2 запускаем функцию проверки через слушатель нажатий
                 chBox.setOnClickListener{
-                    listener.onClickItem(shopListItem.copy(itemChecked = chBox.isChecked)) //39.3
+                    listener.onClickItem(shopListItem.copy(itemChecked = chBox.isChecked), CHECK_BOX) //39.3
+                }
+
+                imEdit.setOnClickListener {
+                    listener.onClickItem(shopListItem, EDIT)
                 }
             }
 
@@ -84,7 +88,7 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
         }
         //37.2 Делаем проверку пусто ли или есть значения
         private fun infoVisibility(shopListItem: ShopListItem): Int{
-            return if(shopListItem.itemInfo.isNullOrEmpty()){
+            return if(shopListItem.itemInfo.isEmpty()){
                 View.GONE
             } else {
                 View.VISIBLE
@@ -117,7 +121,12 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
     }
     //прописываем интерфейс для кнопки удалить
     interface Listener{
-        fun onClickItem(shopListItem: ShopListItem)
+        fun onClickItem(shopListItem: ShopListItem, state : Int)
 
+    }
+
+    companion object{
+        const val EDIT = 0
+        const val CHECK_BOX = 1
     }
 }

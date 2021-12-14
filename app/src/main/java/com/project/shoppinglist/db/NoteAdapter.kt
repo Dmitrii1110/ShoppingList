@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.shoppinglist.R
 import com.project.shoppinglist.databinding.NoteListItemBinding
 import com.project.shoppinglist.entities.NoteItem
+import com.project.shoppinglist.utils.HtmlManager
 
 class NoteAdapter(private val listener: Listener) : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
 

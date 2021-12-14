@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.shoppinglist.activities.MainApp
 import com.project.shoppinglist.activities.NewNoteActivity
 import com.project.shoppinglist.databinding.FragmentNoteBinding

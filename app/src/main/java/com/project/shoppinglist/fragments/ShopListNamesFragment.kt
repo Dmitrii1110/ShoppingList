@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.shoppinglist.activities.MainApp
 import com.project.shoppinglist.activities.ShopListActivity
 import com.project.shoppinglist.databinding.FragmentShopListNamesBinding

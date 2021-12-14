@@ -7,10 +7,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.shoppinglist.R
 import com.project.shoppinglist.databinding.ActivityShopListBinding
 import com.project.shoppinglist.db.MainViewModel
 import com.project.shoppinglist.db.ShopListItemAdapter
+import com.project.shoppinglist.dialogs.EditListItemDialog
 import com.project.shoppinglist.entities.ShopListItem
 import com.project.shoppinglist.entities.ShopListNameItem
 
@@ -68,7 +70,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         val item = ShopListItem(
             null,
             edItem?.text.toString(),
-            null,
+            "",
             false,
             shopListNameItem?.id!!,
             0
@@ -126,8 +128,21 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     }
 
 
-    override fun onClickItem(shopListItem: ShopListItem) {
-        mainViewModel.updateListItem(shopListItem)
+    override fun onClickItem(shopListItem: ShopListItem, state: Int) {
+        when(state){
+            ShopListItemAdapter.CHECK_BOX -> mainViewModel.updateListItem(shopListItem) // Чек бокс
+            ShopListItemAdapter.EDIT -> editListItem(shopListItem) //редактирование
+        }
+
+
+    }
+    private fun editListItem(item: ShopListItem){
+        EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener{
+            override fun onClick(item: ShopListItem) {
+                mainViewModel.updateListItem(item)
+            }
+
+        })
 
     }
 }

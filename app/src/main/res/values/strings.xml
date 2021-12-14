@@ -14,4 +14,9 @@
     <string name="delete_item">Do you want delete this item?</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
+    <!--edit_list_item_dialog-->
+    <string name="title_list_item_dialog">Update List Item</string>
+    <string name="hint_list_item_dialog1">Name</string>
+    <string name="hint_list_item_dialog2">Item info</string>
+    <string name="bottom_list_item">Update item</string>
 </resources>

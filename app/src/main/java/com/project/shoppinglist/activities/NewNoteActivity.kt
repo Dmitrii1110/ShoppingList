@@ -2,8 +2,11 @@ package com.project.shoppinglist.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.ActionMode
 import android.view.Menu
@@ -11,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 
 import com.project.shoppinglist.R
 import com.project.shoppinglist.databinding.ActivityNewNoteBinding
