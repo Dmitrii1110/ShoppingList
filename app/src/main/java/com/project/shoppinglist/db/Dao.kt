@@ -28,6 +28,10 @@ interface Dao {
     @Query ("DELETE FROM shopping_list_names WHERE id IS :id")
     suspend fun deleteShopListName(id: Int)
 
+    //41 Найти все элементы в листе и удалить их (при удалении списка покупок)
+    @Query ("DELETE FROM shop_list_item WHERE listId LIKE :listId")
+    suspend fun deleteShopItemsListId(listId: Int)
+
     @Insert
     suspend fun insertNote(note: NoteItem)
     //35.1

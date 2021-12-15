@@ -52,8 +52,9 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
     }
 
     //28.2 Создаём функцию для делите shopListName
-    fun deleteShopListName(id: Int) = viewModelScope.launch {
-        dao.deleteShopListName(id)
+    fun deleteShopList(id: Int, deleteList: Boolean) = viewModelScope.launch {
+        if(deleteList)dao.deleteShopListName(id)
+        dao.deleteShopItemsListId(id)
     }
 
     //создаем класс посредник для соединения с базой данных
