@@ -1,5 +1,6 @@
 package com.project.shoppinglist.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -15,6 +16,7 @@ import com.project.shoppinglist.db.ShopListItemAdapter
 import com.project.shoppinglist.dialogs.EditListItemDialog
 import com.project.shoppinglist.entities.ShopListItem
 import com.project.shoppinglist.entities.ShopListNameItem
+import com.project.shoppinglist.utils.ShareHelper
 
 class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     //30.1 Создали активити шоп лист бандинг
@@ -67,6 +69,12 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
             }
             R.id.clear_list -> {
                 mainViewModel.deleteShopList(shopListNameItem?.id!!, false)
+            }
+            R.id.share_list -> {
+                startActivity(Intent.createChooser(
+                    ShareHelper.shareShopList(adapter?.currentList!!, shopListNameItem?.name!!),
+                    "Share by"
+                ))
             }
         }
 
