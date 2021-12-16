@@ -3,6 +3,9 @@ package com.project.shoppinglist.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,6 +32,8 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
     private var edItem: EditText? = null
     //36.9
     private var adapter: ShopListItemAdapter? = null
+    //43.1
+    private lateinit var textWatcher: TextWatcher
 
 
     //30.3 Добавляем кусок кода из шоп лист нейм фрагмент
@@ -54,7 +59,26 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         edItem = newItem.actionView.findViewById(R.id.edNewShopItem) as EditText //35.4 Сохраняем введенный текст
         newItem.setOnActionExpandListener(expandActionView())
         saveItem.isVisible = false
+        textWatcher = textWatcher()
         return true
+    }
+
+    //43.2 Будет возвращать уже инициализированный textWatcher
+    private fun textWatcher(): TextWatcher{
+        return object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("MyLog", "On Text Changed: $s")
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        }
     }
 
     //35.6
@@ -123,11 +147,13 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         return object : MenuItem.OnActionExpandListener{
             override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
                 saveItem.isVisible = true
+                edItem?.addTextChangedListener(textWatcher)
                 return true
             }
 
             override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
                 saveItem.isVisible = false
+                edItem?.removeTextChangedListener(textWatcher)
                 invalidateOptionsMenu()  //32.5 Перерисовка элементов меню после сохранения newItem
                 return true
             }

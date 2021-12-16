@@ -1,6 +1,7 @@
 package com.project.shoppinglist.db
 
 import androidx.lifecycle.*
+import com.project.shoppinglist.entities.LibraryItem
 import com.project.shoppinglist.entities.NoteItem
 import com.project.shoppinglist.entities.ShopListItem
 import com.project.shoppinglist.entities.ShopListNameItem
@@ -12,9 +13,11 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
     val dao = database.getDao()
 
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
-    val allShopListNamesItem: LiveData<List<ShopListNameItem>> = dao.getAllShopListNames().asLiveData()
+    val allShopListNamesItem: LiveData<List<ShopListNameItem>> =
+        dao.getAllShopListNames().asLiveData()
+
     //36.4 Показываем все ранее сохраненные в базе элементы в выбранном листе
-    fun getAllItemsFromList(listId: Int): LiveData<List<ShopListItem>>{
+    fun getAllItemsFromList(listId: Int): LiveData<List<ShopListItem>> {
         return dao.getAllShopListItems(listId).asLiveData()
     }
 
@@ -30,8 +33,8 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
     //35.2
     fun insertShopItem(shopListItem: ShopListItem) = viewModelScope.launch {
         dao.insertItem(shopListItem)
+        if(!isLibraryItemExists(shopListItem.name)) dao.insertLibraryItem(LibraryItem(null, shopListItem.name))
     }
-
     //39.2
     fun updateListItem(item: ShopListItem) = viewModelScope.launch {
         dao.updateListItem(item)
@@ -53,8 +56,13 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
 
     //28.2 Создаём функцию для делите shopListName
     fun deleteShopList(id: Int, deleteList: Boolean) = viewModelScope.launch {
-        if(deleteList)dao.deleteShopListName(id)
+        if (deleteList) dao.deleteShopListName(id)
         dao.deleteShopItemsListId(id)
+
+    }
+        //44
+        private suspend fun isLibraryItemExists(name: String): Boolean{
+            return dao.getAllLibraryItems(name).isNotEmpty()
     }
 
     //создаем класс посредник для соединения с базой данных
