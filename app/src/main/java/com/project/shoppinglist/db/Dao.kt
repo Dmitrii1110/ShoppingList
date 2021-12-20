@@ -37,6 +37,10 @@ interface Dao {
     @Query ("DELETE FROM shop_list_item WHERE listId LIKE :listId")
     suspend fun deleteShopItemsListId(listId: Int)
 
+    //46 Прописываем удаление подсказки
+    @Query ("DELETE FROM library WHERE id IS :id")
+    suspend fun deleteLibraryItem(id: Int)
+
     @Insert
     suspend fun insertNote(note: NoteItem)
     //35.1
@@ -49,6 +53,9 @@ interface Dao {
     suspend fun insertShopListNote(nameItem: ShopListNameItem)
     @Update
     suspend fun updateNote(note: NoteItem)
+    //46
+    @Update
+    suspend fun updateLibraryItem(item: LibraryItem)
     //39.1
     @Update
     suspend fun updateListItem(item: ShopListItem)

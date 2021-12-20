@@ -17,6 +17,7 @@ import com.project.shoppinglist.databinding.ActivityShopListBinding
 import com.project.shoppinglist.db.MainViewModel
 import com.project.shoppinglist.db.ShopListItemAdapter
 import com.project.shoppinglist.dialogs.EditListItemDialog
+import com.project.shoppinglist.entities.LibraryItem
 import com.project.shoppinglist.entities.ShopListItem
 import com.project.shoppinglist.entities.ShopListNameItem
 import com.project.shoppinglist.utils.ShareHelper
@@ -72,7 +73,7 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Log.d("MyLog", "On Text Changed: $s")
-                mainViewModel.getAllLibraryItems("%$s%")
+                mainViewModel.getAllLibraryItems("%${s}%")
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -153,6 +154,12 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
 
             }
             adapter?.submitList(tempShopList)
+            //46.7 Проверка подсказок
+            binding.tvEmpty.visibility = if (it.isEmpty()){
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
 
         })
     }
@@ -205,6 +212,11 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         when(state){
             ShopListItemAdapter.CHECK_BOX -> mainViewModel.updateListItem(shopListItem) // Чек бокс
             ShopListItemAdapter.EDIT -> editListItem(shopListItem) //редактирование
+            ShopListItemAdapter.EDIT_LIBRARY_ITEM -> editLibraryItem(shopListItem)
+            ShopListItemAdapter.DELETE_LIBRARY_ITEM ->{
+            mainViewModel.deleteLibraryItem(shopListItem.id!!)
+                mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%")
+            }
         }
 
 
@@ -213,6 +225,17 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener{
             override fun onClick(item: ShopListItem) {
                 mainViewModel.updateListItem(item)
+            }
+
+        })
+
+    }
+
+    private fun editLibraryItem(item: ShopListItem){
+        EditListItemDialog.showDialog(this, item, object : EditListItemDialog.Listener{
+            override fun onClick(item: ShopListItem) {
+                mainViewModel.updateLibraryItem(LibraryItem(item.id, item.name))
+                mainViewModel.getAllLibraryItems("%${edItem?.text.toString()}%") //Для отображения изменения подсказки
             }
 
         })

@@ -3,6 +3,7 @@ package com.project.shoppinglist.dialogs
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import com.project.shoppinglist.R
 import com.project.shoppinglist.databinding.EditListItemDialogBinding
 import com.project.shoppinglist.databinding.NewListDialogBinding
@@ -18,6 +19,7 @@ object EditListItemDialog {
         binding.apply {
             edName.setText(item.name)
             edInfo.setText(item.itemInfo)
+            if(item.itemType == 1) edInfo.visibility = View.GONE //чтобы Item Info прятался при редактировании "Подсказки"
             bUpdate.setOnClickListener{
                 if(edName.text.toString().isNotEmpty()){
                     val itemInfo = if(edInfo.text.toString().isEmpty()) null else edInfo.text.toString()

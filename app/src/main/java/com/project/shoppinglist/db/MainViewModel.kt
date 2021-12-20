@@ -60,6 +60,16 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
         dao.deleteNote(id)
     }
 
+    //46.5
+    fun deleteLibraryItem(id: Int) = viewModelScope.launch {
+        dao.deleteLibraryItem(id)
+    }
+
+    //46.2
+    fun updateLibraryItem(item: LibraryItem) = viewModelScope.launch {
+        dao.updateLibraryItem(item)
+    }
+
     //28.2 Создаём функцию для делите shopListName
     fun deleteShopList(id: Int, deleteList: Boolean) = viewModelScope.launch {
         if (deleteList) dao.deleteShopListName(id)
