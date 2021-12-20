@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.project.shoppinglist.R
+import com.project.shoppinglist.databinding.ShopLibraryListItemBinding
 import com.project.shoppinglist.databinding.ShopListItemBinding
 import com.project.shoppinglist.entities.ShopListItem
 
@@ -66,7 +67,11 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
         }
 
         //33.4
-        fun setLibraryData(shopListNameItem: ShopListItem, listener : Listener){
+        fun setLibraryData(shopListItem: ShopListItem, listener : Listener){
+            val binding = ShopLibraryListItemBinding.bind(view)
+            binding.apply {
+                tvName.text = shopListItem.name
+            }
 
         }
         //38.1 Меняем цвет из зачеркиваем тект при нажатии на чек бокс и обратно

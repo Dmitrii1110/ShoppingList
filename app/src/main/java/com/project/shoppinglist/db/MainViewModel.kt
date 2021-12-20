@@ -11,6 +11,7 @@ import java.lang.IllegalArgumentException
 //класс для передачи данных в базу данных(используем карутину)
 class MainViewModel(database : MainDataBase) : ViewModel() {
     val dao = database.getDao()
+    val libraryItems = MutableLiveData<List<LibraryItem>>()
 
     val allNotes: LiveData<List<NoteItem>> = dao.getAllNotes().asLiveData()
     val allShopListNamesItem: LiveData<List<ShopListNameItem>> =
@@ -19,6 +20,11 @@ class MainViewModel(database : MainDataBase) : ViewModel() {
     //36.4 Показываем все ранее сохраненные в базе элементы в выбранном листе
     fun getAllItemsFromList(listId: Int): LiveData<List<ShopListItem>> {
         return dao.getAllShopListItems(listId).asLiveData()
+    }
+
+    //45.3
+    fun getAllLibraryItems(name: String)= viewModelScope.launch {
+        libraryItems.postValue(dao.getAllLibraryItems(name))
     }
 
 
