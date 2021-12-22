@@ -242,4 +242,24 @@ class ShopListActivity : AppCompatActivity(), ShopListItemAdapter.Listener {
         })
 
     }
+
+    //48.2 Создаём счетчик элементов списка
+    private fun saveItemCount(){
+        var checkedItemCounter = 0
+        adapter?.currentList?.forEach{
+            if(it.itemChecked) checkedItemCounter++
+
+        }
+        val tempShopListNameItem = shopListNameItem?.copy(
+            allItemCounter = adapter?.itemCount!!,
+            checkedItemsCounter = checkedItemCounter
+        )
+        mainViewModel.updateListName(tempShopListNameItem!!)
+    }
+
+    //48.1  Завершение подсчета элементов
+    override fun onBackPressed() {
+        saveItemCount()
+        super.onBackPressed()
+    }
 }

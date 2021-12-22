@@ -1,8 +1,11 @@
 package com.project.shoppinglist.db
 
+import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
@@ -37,6 +40,15 @@ class ShopListNameAdapter(private val listener: Listener) : ListAdapter<ShopList
             tvListName.text = shopListNameItem.name //27.5 Заменили tvTitle на tvListName, а title заменили на name
             //tvDescription.text = HtmlManager.getFromHtml(shopListNameItem.content).trim() //27.6 Эту сроку мы убираем
             tvTime.text = shopListNameItem.time
+            pBar.max = shopListNameItem.allItemCounter //48.5 Указываем максимальный размер прогресс бара
+            pBar.progress = shopListNameItem.checkedItemsCounter //48.6 Указываем сколько элементов уже куплено (прогресс бар)
+            val colorState = ColorStateList.valueOf(getProgressColorState(shopListNameItem, binding.root.context))//48.9 Переменная для передачи цвета прогресс бара
+            pBar.progressTintList = colorState //48.8 Передаем цвет прогресс бара
+            counterCard.backgroundTintList = colorState //48.9 Передаем цвет в кардвью отображения купленных элементов
+
+            //48.4 передём все данные по количеству элементов в переменную counterText
+            val counterText = "${shopListNameItem.checkedItemsCounter}/${shopListNameItem.allItemCounter}"
+            tvCounter.text = counterText //48.3 передаем текст для подсчета элементов (счетчик)
             itemView.setOnClickListener{
                 listener.onClickItem(shopListNameItem) //27.7 Эту строку тоже убираем //30.8 снова добавили
             }
@@ -49,9 +61,17 @@ class ShopListNameAdapter(private val listener: Listener) : ListAdapter<ShopList
             imEdit.setOnClickListener{
                 listener.editItem(shopListNameItem)
             }
-
-
         }
+
+        //48.7  Для изменения цвета прогресс бара по мере заполнения
+        private fun getProgressColorState(item: ShopListNameItem, context: Context): Int{
+            return if(item.checkedItemsCounter == item.allItemCounter){
+                ContextCompat.getColor(context, R.color.green_main)
+            } else {
+                ContextCompat.getColor(context, R.color.red_main)
+            }
+        }
+
         companion object{
             fun create(parent: ViewGroup): ItemHolder{
                 return ItemHolder(
