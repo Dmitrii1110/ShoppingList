@@ -77,6 +77,10 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
                 imDelete.setOnClickListener {
                     listener.onClickItem(shopListItem, DELETE_LIBRARY_ITEM)
                 }
+                //47.1 для выбора и вставки подсказки в поле ввода
+                itemView.setOnClickListener {
+                    listener.onClickItem(shopListItem, ADD)
+                }
             }
 
         }
@@ -143,5 +147,7 @@ class ShopListItemAdapter(private val listener: Listener) : ListAdapter<ShopList
         const val EDIT_LIBRARY_ITEM = 2
         //46.6
         const val DELETE_LIBRARY_ITEM = 3
+        //47.2
+        const val ADD = 4
     }
 }
