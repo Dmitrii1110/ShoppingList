@@ -19,4 +19,12 @@
     <string name="hint_list_item_dialog1">Name</string>
     <string name="hint_list_item_dialog2">Item info</string>
     <string name="bottom_list_item">Update item</string>
+    <!--setting_preference-->
+    <string name="linear">Linear</string>
+    <string name="grid">Grid</string>
+    <string name="general">General</string>
+    <string name="choose_note_style">Choose note style</string>
+    <string name="choose_time_format">Choose time format</string>
+    <string name="remove_ads">Remove ads</string>
+    <string name="remove_ads_summary">Remove all ads from this app</string>
 </resources>
