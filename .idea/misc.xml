@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_theme_style.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_new_note.xml" value="0.2730190109050106" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.15534420289855072" />
         <entry key="app/src/main/res/layout/activity_shop_list.xml" value="0.45" />
         <entry key="app/src/main/res/layout/delete_dialog.xml" value="0.375" />
         <entry key="app/src/main/res/layout/edit_action_layout.xml" value="0.1408514492753623" />
@@ -27,7 +28,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
