@@ -1,5 +1,6 @@
 package com.project.shoppinglist.db
 
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +12,16 @@ import com.project.shoppinglist.R
 import com.project.shoppinglist.databinding.NoteListItemBinding
 import com.project.shoppinglist.entities.NoteItem
 import com.project.shoppinglist.utils.HtmlManager
+import com.project.shoppinglist.utils.TimeManager
 
-class NoteAdapter(private val listener: Listener) : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
+class NoteAdapter(private val listener: Listener, private val defPref: SharedPreferences) : ListAdapter<NoteItem, NoteAdapter.ItemHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.setData(getItem(position), listener)
+        holder.setData(getItem(position), listener, defPref)
     }
 
     //подключаем созданную форму note list item к Binding
@@ -27,10 +29,10 @@ class NoteAdapter(private val listener: Listener) : ListAdapter<NoteItem, NoteAd
         private val binding = NoteListItemBinding.bind(view)
 
         //функция для заполнения формы разметки note list item
-        fun setData(note: NoteItem, listener: Listener) = with(binding){
+        fun setData(note: NoteItem, listener: Listener, defPref: SharedPreferences) = with(binding){
             tvTitle.text = note.title
             tvDescription.text = HtmlManager.getFromHtml(note.content).trim()
-            tvTime.text = note.time
+            tvTime.text = TimeManager.getTimeFormat(note.time, defPref)
             itemView.setOnClickListener{
                 listener.onClickItem(note)
             }
