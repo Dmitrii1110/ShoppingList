@@ -14,6 +14,7 @@ import com.project.shoppinglist.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     lateinit var binding: ActivityMainBinding
+    private var currentMenuItemId = R.id.shop_list
     //
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +32,11 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
                     startActivity(Intent(this, SettingsActivity::class.java))
                 }
                 R.id.notes ->{
+                    currentMenuItemId = R.id.notes
                     FragmentManager.setFragment(NoteFragment.newInstance(), this)
                 }
                 R.id.shop_list ->{
+                    currentMenuItemId = R.id.shop_list
                     FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
                 }
                 R.id.new_item ->{
@@ -42,6 +45,11 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
             }
             true
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.bNav.selectedItemId = currentMenuItemId
     }
 
     override fun onClick(name: String) {
