@@ -43,6 +43,10 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt 'androidx.room:room-compiler:2.4.0'
+
+    implementation 'com.google.android.gms:play-services-ads:20.5.0'
+
+
     compileOnly 'com.github.pengrad:jdk9-deps:1.0' //-добавленная строка
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'

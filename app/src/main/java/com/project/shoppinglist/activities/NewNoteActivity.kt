@@ -251,11 +251,24 @@ class NewNoteActivity : AppCompatActivity() {
         if(size != null) this.textSize = size.toFloat()
     }
 
-    private fun getSelectedTheme(): Int{
-        return if(defPref.getString("theme_key", "blue") == "blue"){
-            R.style.Theme_NewNoteBlue
-        } else {
-            R.style.Theme_NewNoteRed
-        }
+private fun getSelectedTheme(): Int {
+       return when {
+
+           (defPref.getString("theme_key", "blue") == "blue") -> {
+               R.style.Theme_ShoppingListBlue
+           }
+            (defPref.getString("theme_key", "red") == "red") -> {
+                R.style.Theme_ShoppingListRed
+            }
+           (defPref.getString("theme_key", "green") == "green") -> {
+               R.style.Theme_ShoppingListGreen
+            }
+            (defPref.getString("theme_key", "yellow") == "yellow") -> {
+                R.style.Theme_ShoppingListYellow
+            }
+           else -> {
+               R.style.Theme_ShoppingListBlue
+           }
+       }
     }
 }

@@ -21,10 +21,14 @@
     <string-array name="choose_theme_array">
         <item>Blue theme</item>
         <item>Red theme</item>
+        <item>Green theme</item>
+        <item>Yellow theme</item>
     </string-array>
     <string-array name="choose_theme_values">
         <item>blue</item>
         <item>red</item>
+        <item>green</item>
+        <item>yellow</item>
     </string-array>
 
     <string-array name="text_size_array">

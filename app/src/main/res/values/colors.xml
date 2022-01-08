@@ -25,4 +25,7 @@
 
     <color name="red_light">#CF1414</color>
     <color name="red_dark">#9C1010</color>
+
+    <color name="yellow_light">#F3DF30</color>
+    <color name="yellow_dark">#9E901C</color>
 </resources>
