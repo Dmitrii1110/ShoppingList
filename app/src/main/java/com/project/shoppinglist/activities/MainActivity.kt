@@ -169,4 +169,7 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     interface AdListener{
         fun onFinish()
     }
+
+    //
+
 }
