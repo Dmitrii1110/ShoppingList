@@ -170,8 +170,4 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
         fun onFinish()
     }
 
-    //
-    //
-    //
-
 }
