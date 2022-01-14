@@ -86,6 +86,11 @@ class BillingManager(val activity: AppCompatActivity) {
         }
     }
 
+    //функция для закрытия
+    fun closeConnection(){
+        bClient?.endConnection()
+    }
+
     companion object{
         const val REMOVE_AD_ITEM = "remove_ad_item_id"
     }
