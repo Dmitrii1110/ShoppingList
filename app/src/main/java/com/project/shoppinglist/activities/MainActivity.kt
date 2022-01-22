@@ -23,8 +23,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus
 
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
-
-
+import com.project.shoppinglist.billing.BillingManager
 
 
 class MainActivity : AppCompatActivity(), NewListDialog.Listener {
@@ -35,18 +34,20 @@ class MainActivity : AppCompatActivity(), NewListDialog.Listener {
     private var iAd: InterstitialAd? = null
     private var adShowCounter = 0
     private var adShowCounterMax = 3
+    private lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         defPref = PreferenceManager.getDefaultSharedPreferences(this)
         currentTheme = defPref.getString("theme_key", "blue").toString()
         setTheme(getSelectedTheme())
         super.onCreate(savedInstanceState)
+        pref = getSharedPreferences(BillingManager.MAIN_PREF, MODE_PRIVATE)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //MobileAds.initialize(this) {}
         FragmentManager.setFragment(ShopListNamesFragment.newInstance(), this)
         setBottomNavListener()
-        loadInterAd()
+        if(!pref.getBoolean(BillingManager.REMOVE_ADS_KEY, false))loadInterAd()
     }
 
     //Ниже 5 функций подключения и показа рекламы
