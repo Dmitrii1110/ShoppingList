@@ -1,5 +1,5 @@
 # ShoppingList
-The shopping list+notes app. MVVM architecture. Database Room. 
+The app "Shopping List + Notes" for Android in Kotlin language. MVVM architecture. Database Room. 
 
 <img width="329" alt="ShoppingList1" src="https://user-images.githubusercontent.com/74114011/165501705-2658b09c-7912-4cc7-9dbb-bfea16a2e126.png">
 <img width="336" alt="ShoppingList2" src="https://user-images.githubusercontent.com/74114011/165501718-a4465bd6-2d10-48a8-a1a4-30808227e47b.png">
